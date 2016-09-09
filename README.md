@@ -8,13 +8,13 @@ A jQuery pagination plugin.
 
 2. Include jQuery:
 
-> ``` html
+  ``` html
   <script src="/js/libs/jquery-1.11.2.min.js"></script>
   ```
 
 3. Include plugin's code:
 
-> ``` html
+  ``` html
   <link rel="stylesheet" href="dist/css/by-pagination.css">
   <script src="dist/js/by-pagination.js"></script>
 
@@ -63,7 +63,7 @@ A jQuery pagination plugin.
 
 4. Call the plugin:
 
-> ``` javascript
+  ``` javascript
   $(function() {
     $('#page').byPagination({
       pages: 10,
@@ -76,7 +76,7 @@ A jQuery pagination plugin.
 
 * pages
 
-> Total page, default 1
+  Total page, default 1
 
   ``` javascript
   $('#page').byPagination({
@@ -92,7 +92,7 @@ A jQuery pagination plugin.
 
 * page
 
-> Current page, default 1
+  Current page, default 1
 
   data attribute:
 
