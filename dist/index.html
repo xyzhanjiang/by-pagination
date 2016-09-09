@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- saved from url=(0014)about:internet -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pagination Example</title>
+<link rel="stylesheet" href="css/by-pagination.min.css">
+</head>
+
+<body>
+<ul class="by-pagination" id="page">
+  <li>
+    <a class="by-pagination-first" href="#">首页</a>
+  </li>
+  <li>
+    <a class="by-pagination-prev" href="#">上一页</a>
+  </li>
+  <li>
+    <a class="by-pagination-1" href="#">1</a>
+  </li>
+  <li class="by-pagination-hellip-1">
+    <span>&hellip;</span>
+  </li>
+  <li>
+    <a class="by-pagination-minus-2" href="#"></a>
+  </li>
+  <li>
+    <a class="by-pagination-minus-1" href="#"></a>
+  </li>
+  <li class="active">
+    <a class="by-pagination-active" href="#"></a>
+  </li>
+  <li>
+    <a class="by-pagination-plus-1" href="#"></a>
+  </li>
+  <li>
+    <a class="by-pagination-plus-2" href="#"></a>
+  </li>
+  <li class="by-pagination-hellip-2">
+    <span>&hellip;</span>
+  </li>
+  <li>
+    <a class="by-pagination-2" href="#"></a>
+  </li>
+  <li>
+    <a class="by-pagination-next" href="#">下一页</a>
+  </li>
+  <li>
+    <a class="by-pagination-last" href="#">尾页</a>
+  </li>
+</ul>
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="js/by-pagination.min.js"></script>
+<script>
+$('#page').byPagination({
+  pages: 18,
+  page: 5
+})
+
+$('#page').on('page.by.pagination', function(e, page) {
+  console.log(page)
+})
+</script>
+</body>
+</html>
