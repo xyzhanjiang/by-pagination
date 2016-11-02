@@ -1,12 +1,3 @@
-/*!
- * Pagination.js
- * Copyright (c) 2016 xyzhanjiang & contributors
- *
- * Licensed under the MIT License.
- *
- * @author xyzhanjiang <xyzhanjiang@qq.com>
- */
-
 function Pagination(element, options) {
   this.$el      = $(element)
   this.options  = $.extend({}, Pagination.DEFAULTS, options)
@@ -147,8 +138,9 @@ function Plugin(option) {
   })
 }
 
-$.fn.byPagination = Plugin
+$.fn.byPagination          = Plugin
+$.fn.byPagination.DEFAULTS = Pagination.DEFAULTS
 
-$(window).on('load.by.pagination', function() {
+$(window).on('load.by.pagination', () => {
   Plugin.call($('[data-init="by-pagination"]'))
 })

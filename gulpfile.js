@@ -1,23 +1,38 @@
-var gulp   = require('gulp');
-var uglify = require('gulp-uglify');
-var babel = require('gulp-babel');
-var umd = require('gulp-umd');
-var sass = require('gulp-sass');
-var cssnano = require('gulp-cssnano');
-var autoprefixer = require('gulp-autoprefixer');
-var sourcemaps = require('gulp-sourcemaps');
-var rename = require('gulp-rename');
-var browserSync = require('browser-sync').create();
-var reload = browserSync.reload;
+const gulp   = require('gulp');
+const banner = require('gulp-banner');
+const uglify = require('gulp-uglify');
+const babel = require('gulp-babel');
+const umd = require('gulp-umd');
+const sass = require('gulp-sass');
+const cssnano = require('gulp-cssnano');
+const autoprefixer = require('gulp-autoprefixer');
+const sourcemaps = require('gulp-sourcemaps');
+const rename = require('gulp-rename');
+const browserSync = require('browser-sync').create();
+const reload = browserSync.reload;
+const pkg = require('./package');
 
-gulp.task('js', function() {
+const now = new Date();
+const note = `/*!
+ * ${pkg.name} v${pkg.version}
+ * https://github.com/${pkg.repository}
+ *
+ * Copyright (c) 2016-${now.getFullYear()} ${pkg.author.name}<${pkg.author.email}> & contributors
+ * Licensed under the ${pkg.license} license
+ *
+ * Date: ${now.toISOString()}
+ */
+
+`;
+
+gulp.task('js', () => {
   return gulp.src('src/js/by-pagination.js')
     .pipe(sourcemaps.init())
     .pipe(babel({
       presets: ['es2015']
     }))
     .pipe(umd({
-      dependencies: function(file) {
+      dependencies: (file) => {
         return [
           {
             name: 'jQuery',
@@ -28,21 +43,19 @@ gulp.task('js', function() {
           }
         ];
       },
-      exports: function(file) {
-        return 'Plugin';
-      },
-      namespace: function(file) {
-        return 'byPagination';
-      }
+      exports: (file) => 'Plugin',
+      namespace: (file) => 'byPagination'
     }))
+    .pipe(banner(note))
     .pipe(gulp.dest('dist/js'))
     .pipe(uglify())
-    .pipe(rename({extname: '.min.js'}))
+    .pipe(banner(note))
+    .pipe(rename({suffix: '.min'}))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('dist/js'));
 });
 
-gulp.task('css', function() {
+gulp.task('css', () => {
   return gulp.src('src/scss/by-pagination.scss')
     .pipe(sourcemaps.init())
     .pipe(sass())
@@ -50,23 +63,24 @@ gulp.task('css', function() {
       browsers: ['> 1%', 'ie >= 9'],
       cascade: false
     }))
+    .pipe(banner(note))
     .pipe(gulp.dest('dist/css'))
     .pipe(cssnano({
       autoprefixer: false
     }))
-    .pipe(rename({extname: '.min.css'}))
+    .pipe(rename({suffix: '.min'}))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('dist/css'));
 });
 
-gulp.task('serve', function() {
+gulp.task('serve', () => {
   browserSync.init({
     server: {
       baseDir: './dist'
     }
   });
 
-  gulp.watch('src/js/*.js', ['js']);
+  gulp.watch('src/js/**/*.js', ['js']);
   gulp.watch('src/scss/**/*.scss', ['css']);
   gulp.watch('dist/*.html').on('change', reload);
 });

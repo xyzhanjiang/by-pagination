@@ -1,6 +1,6 @@
 {
   "name": "by-pagination",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A pagination plugin.",
   "main": "dist/js/by-pagination.js",
   "dependencies": {},
@@ -10,6 +10,7 @@
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
     "gulp-babel": "^6.1.2",
+    "gulp-banner": "^0.1.3",
     "gulp-cssnano": "^2.1.2",
     "gulp-jshint": "^2.0.1",
     "gulp-rename": "^1.2.2",
@@ -22,6 +23,10 @@
     "test": "echo 1",
     "production": "gulp"
   },
-  "author": "",
-  "license": "MIT"
+  "author": {
+    "name": "xyzhanjiang",
+    "email": "xyzhanjiang@qq.com"
+  },
+  "license": "MIT",
+  "repository": "xyzhanjiang/by-pagination/"
 }

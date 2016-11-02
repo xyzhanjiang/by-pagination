@@ -1,3 +1,13 @@
+/*!
+ * by-pagination v0.0.3
+ * https://github.com/xyzhanjiang/by-pagination/
+ *
+ * Copyright (c) 2016-2016 xyzhanjiang<xyzhanjiang@qq.com> & contributors
+ * Licensed under the MIT license
+ *
+ * Date: 2016-11-02T03:37:36.157Z
+ */
+
 ;(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     define(['jquery'], factory);
@@ -10,15 +20,6 @@
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-
-/*!
- * Pagination.js
- * Copyright (c) 2016 xyzhanjiang & contributors
- *
- * Licensed under the MIT License.
- *
- * @author xyzhanjiang <xyzhanjiang@qq.com>
- */
 
 function Pagination(element, options) {
   this.$el = $(element);
@@ -155,6 +156,7 @@ function Plugin(option) {
 }
 
 $.fn.byPagination = Plugin;
+$.fn.byPagination.DEFAULTS = Pagination.DEFAULTS;
 
 $(window).on('load.by.pagination', function () {
   Plugin.call($('[data-init="by-pagination"]'));
