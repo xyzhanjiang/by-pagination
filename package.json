@@ -1,6 +1,6 @@
 {
   "name": "by-pagination",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A pagination plugin.",
   "main": "dist/js/by-pagination.js",
   "dependencies": {},

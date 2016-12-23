@@ -25,8 +25,8 @@ const note = `/*!
 
 `;
 
-gulp.task('js', () => {
-  return gulp.src('src/js/by-pagination.js')
+gulp.task('js', () =>
+  gulp.src('src/js/by-pagination.js')
     .pipe(sourcemaps.init())
     .pipe(babel({
       presets: ['es2015']
@@ -52,11 +52,11 @@ gulp.task('js', () => {
     .pipe(banner(note))
     .pipe(rename({suffix: '.min'}))
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('dist/js'));
-});
+    .pipe(gulp.dest('dist/js'))
+);
 
-gulp.task('css', () => {
-  return gulp.src('src/scss/by-pagination.scss')
+gulp.task('css', () =>
+  gulp.src('src/scss/by-pagination.scss')
     .pipe(sourcemaps.init())
     .pipe(sass())
     .pipe(autoprefixer({
@@ -70,8 +70,8 @@ gulp.task('css', () => {
     }))
     .pipe(rename({suffix: '.min'}))
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('dist/css'));
-});
+    .pipe(gulp.dest('dist/css'))
+);
 
 gulp.task('serve', () => {
   browserSync.init({
