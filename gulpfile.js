@@ -80,8 +80,8 @@ gulp.task('serve', () => {
     }
   });
 
-  gulp.watch('src/js/**/*.js', ['js']);
-  gulp.watch('src/scss/**/*.scss', ['css']);
+  gulp.watch('src/js/**/*.js', ['js']).on('change', reload);
+  gulp.watch('src/scss/**/*.scss', ['css']).on('change', reload);
   gulp.watch('dist/*.html').on('change', reload);
 });
 
