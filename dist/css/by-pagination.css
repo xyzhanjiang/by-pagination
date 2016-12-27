@@ -5,7 +5,7 @@
  * Copyright (c) 2016-2016 xyzhanjiang<xyzhanjiang@qq.com> & contributors
  * Licensed under the MIT license
  *
- * Date: 2016-12-27T08:48:04.606Z
+ * Date: 2016-12-27T08:58:09.484Z
  */
 
 .by-pagination {
@@ -16,21 +16,18 @@
   display: inline; }
 
 .by-pagination li a {
-  background-color: #fff;
-  border: 1px solid #ccc;
-  color: green;
+  color: #999;
   float: left;
-  font: 14px/16px "Helvetica Neue", Helvetica, Arial, sans-serif;
-  margin: 0 2px;
+  font: 12px/1.5 Microsoft YaHei,tahoma,arial,"Hiragino Sans GB",\5b8b\4f53;
+  margin: 0 6px;
   padding: 2px 4px;
   position: relative;
   text-decoration: none; }
 
 .by-pagination li a:hover,
 .by-pagination li a:focus {
-  background-color: #eee;
   border-color: #ccc;
-  color: green; }
+  color: #ee7326; }
 
 .by-pagination li span {
   float: left;
@@ -38,12 +35,15 @@
   position: relative; }
 
 .by-pagination li.active a {
-  background-color: green;
-  border-color: green;
-  color: #fff; }
+  border-color: #999;
+  color: #ee7326; }
 
 .by-pagination li a.disabled {
   background-color: #f3f3f3;
   border-color: #ccc;
   color: #ccc;
   cursor: not-allowed; }
+
+.by-pagination .prev-next a {
+  border: 1px solid #dedede;
+  padding: 2px 6px; }

@@ -5,7 +5,7 @@
  * Copyright (c) 2016-2016 xyzhanjiang<xyzhanjiang@qq.com> & contributors
  * Licensed under the MIT license
  *
- * Date: 2016-12-27T05:52:27.307Z
+ * Date: 2016-12-27T11:46:57.670Z
  */
 
 ;(function(root, factory) {
@@ -19,7 +19,7 @@
 }(this, function($) {
 'use strict';
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 function Pagination(element, options) {
   this.$el = $(element);
@@ -118,7 +118,7 @@ Pagination.prototype.init = function () {
 Pagination.prototype.to = function (page) {
   this.options.page = parseInt(page) || 1;
   this.$el.trigger('page.by.pagination', this.options.page);
-  this.$active[0].focus();
+  this.$active.find('a').focus();
   this.render(this.options.page);
 };
 

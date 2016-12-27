@@ -115,7 +115,7 @@ Pagination.prototype.init = function() {
 Pagination.prototype.to = function(page) {
   this.options.page = parseInt(page) || 1
   this.$el.trigger('page.by.pagination', this.options.page)
-  this.$active[0].focus()
+  this.$active.find('a').focus()
   this.render(this.options.page)
 }
 
