@@ -5,7 +5,7 @@
  * Copyright (c) 2016-2016 xyzhanjiang<xyzhanjiang@qq.com> & contributors
  * Licensed under the MIT license
  *
- * Date: 2016-12-27T12:09:33.060Z
+ * Date: 2016-12-27T12:12:30.653Z
  */
 
 .by-pagination {
@@ -27,7 +27,8 @@
 .by-pagination li a:hover,
 .by-pagination li a:focus {
   border-color: #ccc;
-  color: #ee7326; }
+  color: #ee7326;
+  outline: none; }
 
 .by-pagination li span {
   float: left;
@@ -38,7 +39,7 @@
   border-color: #999;
   color: #ee7326; }
 
-.by-pagination li a.disabled {
+.by-pagination li.disabled a {
   background-color: #f3f3f3;
   border-color: #ccc;
   color: #ccc;

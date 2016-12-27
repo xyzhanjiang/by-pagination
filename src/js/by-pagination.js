@@ -82,7 +82,7 @@ Pagination.prototype.init = function() {
 
   // 生成当前页两边的页码按钮
   for (let i = 5; i >= 1; i--) {
-    if (pages >= i) {
+    if (pages > i + 1) {
       this[`$minus${i}`] = $(pageTemplate).insertBefore(this.$active)
       this[`$minus${i}`].find('a').data('page', page - i)
       this[`$plus${i}`] = $(pageTemplate).insertAfter(this.$active)
@@ -162,16 +162,25 @@ Pagination.prototype.render = function(page) {
   var pages = this.options.pages
 
   this.$active.find('a').text(page)
-  this.$minus1.find('a').data('page', page - 1).text(page - 1)
-  this.$minus2.find('a').data('page', page - 2).text(page - 2)
-  
-  this.$plus1.find('a').data('page', page + 1).text(page + 1)
-  this.$plus2.find('a').data('page', page + 2).text(page + 2)
 
-  page > 2 ? this.$minus1.show() : this.$minus1.hide()
-  page > 3 ? this.$minus2.show() : this.$minus2.hide()
-  page < pages - 1 ? this.$plus1.show() : this.$plus1.hide()
-  page < pages - 2 ? this.$plus2.show() : this.$plus2.hide()
+  if (pages > 1) {
+    page > 1 ? this.$p1.show() : this.$p1.hide()
+    page < pages ? this.$p2.show() : this.$p2.hide()
+  }
+
+  if (pages > 2) {
+    this.$minus1.find('a').data('page', page - 1).text(page - 1)
+    this.$plus1.find('a').data('page', page + 1).text(page + 1)
+    page > 2 ? this.$minus1.show() : this.$minus1.hide()
+    page < pages - 1 ? this.$plus1.show() : this.$plus1.hide()
+  }
+
+  if (pages > 3) {
+    this.$minus2.find('a').data('page', page - 2).text(page - 2)
+    this.$plus2.find('a').data('page', page + 2).text(page + 2)
+    page > 3 ? this.$minus2.show() : this.$minus2.hide()
+    page < pages - 2 ? this.$plus2.show() : this.$plus2.hide()
+  }
 
   if (pages > 4) {
     this.$minus3.find('a').data('page', page - 3).text(page - 3)
@@ -199,9 +208,6 @@ Pagination.prototype.render = function(page) {
     page > 4 ? this.$hellip1.show() : this.$hellip1.hide()
     page < pages - 3 ? this.$hellip2.show() : this.$hellip2.hide()
   }
-
-  page > 1 ? this.$p1.show() : this.$p1.hide()
-  page < pages ? this.$p2.show() : this.$p2.hide()
 
   // prev/next
   if (this.options.firstLastBtn) {

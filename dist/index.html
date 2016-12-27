@@ -14,11 +14,9 @@
 <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
 <script src="js/by-pagination.min.js"></script>
 <script>
-$.fn.byPagination.DEFAULTS.pages = 8
+$.fn.byPagination.DEFAULTS.pages = 2
 $('#page').byPagination({
-  page: 1,
-  prevNextBtn: true,
-  firstLastBtn: true
+  page: 1
 })
 
 $('#page').on('page.by.pagination', function(e, page) {
