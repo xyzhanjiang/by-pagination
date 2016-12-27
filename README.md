@@ -100,9 +100,17 @@ A jQuery pagination plugin.
   <ul data-page="5"></ul>
   ```
 
-### Event
+* firstLastBtn
 
-page.by.pagination
+  是否显示首页和尾页按钮，默认值为 true
+
+* prevNextBtn
+
+  是否显示上一页和下一页按钮，默认值为 true
+
+### 事件
+
+当分页跳转时元素将触发 `page.by.pagination` 事件：
 
 ``` javascript
 $('#page').on('page.by.pagination', function(e, page) {

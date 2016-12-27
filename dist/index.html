@@ -10,71 +10,15 @@
 </head>
 
 <body>
-<ul class="by-pagination" id="page">
-  <li>
-    <a class="by-pagination-first" href="#">首页</a>
-  </li>
-  <li>
-    <a class="by-pagination-prev" href="#">上一页</a>
-  </li>
-  <li>
-    <a class="by-pagination-1" href="#">1</a>
-  </li>
-  <li class="by-pagination-hellip-1">
-    <span>&hellip;</span>
-  </li>
-  <li>
-    <a class="by-pagination-minus-5" href="#"></a>
-  </li>
-  <li>
-    <a class="by-pagination-minus-4" href="#"></a>
-  </li>
-  <li>
-    <a class="by-pagination-minus-3" href="#"></a>
-  </li>
-  <li>
-    <a class="by-pagination-minus-2" href="#"></a>
-  </li>
-  <li>
-    <a class="by-pagination-minus-1" href="#"></a>
-  </li>
-  <li class="active">
-    <a class="by-pagination-active" href="#"></a>
-  </li>
-  <li>
-    <a class="by-pagination-plus-1" href="#"></a>
-  </li>
-  <li>
-    <a class="by-pagination-plus-2" href="#"></a>
-  </li>
-  <li>
-    <a class="by-pagination-plus-3" href="#"></a>
-  </li>
-  <li>
-    <a class="by-pagination-plus-4" href="#"></a>
-  </li>
-  <li>
-    <a class="by-pagination-plus-5" href="#"></a>
-  </li>
-  <li class="by-pagination-hellip-2">
-    <span>&hellip;</span>
-  </li>
-  <li>
-    <a class="by-pagination-2" href="#"></a>
-  </li>
-  <li>
-    <a class="by-pagination-next" href="#">下一页</a>
-  </li>
-  <li>
-    <a class="by-pagination-last" href="#">尾页</a>
-  </li>
-</ul>
+<ul class="by-pagination" id="page"></ul>
 <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
 <script src="js/by-pagination.min.js"></script>
 <script>
-$.fn.byPagination.DEFAULTS.pages = 7
+$.fn.byPagination.DEFAULTS.pages = 8
 $('#page').byPagination({
-  page: 1
+  page: 1,
+  prevNextBtn: true,
+  firstLastBtn: true
 })
 
 $('#page').on('page.by.pagination', function(e, page) {

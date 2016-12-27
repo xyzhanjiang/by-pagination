@@ -1,11 +1,11 @@
 /*!
- * by-pagination v0.0.4
+ * by-pagination v0.0.5
  * https://github.com/xyzhanjiang/by-pagination/
  *
  * Copyright (c) 2016-2016 xyzhanjiang<xyzhanjiang@qq.com> & contributors
  * Licensed under the MIT license
  *
- * Date: 2016-12-23T02:45:10.696Z
+ * Date: 2016-12-27T03:19:12.592Z
  */
 
 ;(function(root, factory) {
@@ -24,52 +24,83 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 function Pagination(element, options) {
   this.$el = $(element);
   this.options = $.extend({}, Pagination.DEFAULTS, options);
-  this.$active = this.$el.find('.by-pagination-active');
-  this.$minus1 = this.$el.find('.by-pagination-minus-1');
-  this.$minus2 = this.$el.find('.by-pagination-minus-2');
-  this.$minus3 = this.$el.find('.by-pagination-minus-3');
-  this.$minus4 = this.$el.find('.by-pagination-minus-4');
-  this.$minus5 = this.$el.find('.by-pagination-minus-5');
-  this.$plus1 = this.$el.find('.by-pagination-plus-1');
-  this.$plus2 = this.$el.find('.by-pagination-plus-2');
-  this.$plus3 = this.$el.find('.by-pagination-plus-3');
-  this.$plus4 = this.$el.find('.by-pagination-plus-4');
-  this.$plus5 = this.$el.find('.by-pagination-plus-5');
-
-  this.$p1 = this.$el.find('.by-pagination-1');
-  this.$p2 = this.$el.find('.by-pagination-2');
-
-  this.$first = this.$el.find('.by-pagination-first');
-  this.$prev = this.$el.find('.by-pagination-prev');
-  this.$next = this.$el.find('.by-pagination-next');
-  this.$last = this.$el.find('.by-pagination-last');
-
-  this.$hellip1 = this.$el.find('.by-pagination-hellip-1');
-  this.$hellip2 = this.$el.find('.by-pagination-hellip-2');
 
   this.init();
 
   var self = this;
 
+  // 绑定点击事件
   this.$el.on('click.by.pagination', 'a', function (e) {
     e.preventDefault();
 
     var $a = $(this);
-    if ($a.hasClass('by-pagination-active')) return;else if ($a.hasClass('by-pagination-prev') || $a.hasClass('by-pagination-minus-1')) self.prev();else if ($a.hasClass('by-pagination-next') || $a.hasClass('by-pagination-plus-1')) self.next();else if ($a.hasClass('by-pagination-first') || $a.hasClass('by-pagination-1')) self.first();else if ($a.hasClass('by-pagination-last') || $a.hasClass('by-pagination-2')) self.last();else self.to($a.text());
+
+    // 如果点击当前页则返回
+    if ($a.parent().hasClass('active')) return;
+
+    // 跳转到点击页面
+    if ($a.data('page')) self.to($a.data('page'));
   });
 }
 
+// 默认配置
 Pagination.DEFAULTS = {
+  firstLastBtn: true,
+  firstLastTxt: ['首页', '尾页'],
   pages: 1,
-  page: 1
+  page: 1,
+  pageTemplate: '\n    <li>\n      <a href="#"></a>\n    </li>\n  ',
+  prevNextBtn: true,
+  prevNextTxt: ['上一页', '下一页']
 };
 
 /*
  * @description init
  */
 Pagination.prototype.init = function () {
-  this.$p1.text(1);
-  this.$p2.text(this.options.pages);
+  var page = this.options.page;
+  var pages = this.options.pages;
+  var pageTemplate = this.options.pageTemplate;
+
+  this.$active = $(pageTemplate).appendTo(this.$el).addClass('active');
+
+  if (this.options.firstLastBtn) {
+    this.$first = $(pageTemplate).insertBefore(this.$active);
+    this.$first.find('a').on('click.by.pagination', $.proxy(this.first, this)).text(this.options.firstLastTxt[0]);
+
+    this.$last = $(pageTemplate).insertAfter(this.$active);
+    this.$last.find('a').on('click.by.pagination', $.proxy(this.last, this)).text(this.options.firstLastTxt[1]);
+  }
+
+  if (this.options.prevNextBtn) {
+    this.$prev = $(pageTemplate).insertBefore(this.$active);
+    this.$prev.find('a').on('click.by.pagination', $.proxy(this.prev, this)).text(this.options.prevNextTxt[0]);
+
+    this.$next = $(pageTemplate).insertAfter(this.$active);
+    this.$next.find('a').on('click.by.pagination', $.proxy(this.next, this)).text(this.options.prevNextTxt[1]);
+  }
+
+  if (pages > 1) {
+    this.$p1 = $(pageTemplate).insertBefore(this.$active);
+    this.$p1.find('a').data('page', 1).text(1);
+    this.$p2 = $(pageTemplate).insertAfter(this.$active);
+    this.$p2.find('a').data('page', pages).text(pages);
+  }
+
+  for (var i = 5; i >= 1; i--) {
+    if (pages >= i) {
+      this['$minus' + i] = $(pageTemplate).insertBefore(this.$active);
+      this['$minus' + i].find('a').data('page', page - i);
+      this['$plus' + i] = $(pageTemplate).insertAfter(this.$active);
+      this['$plus' + i].find('a').data('page', page + i);
+    }
+  }
+
+  if (pages > 7) {
+    this.$hellip1 = $('\n      <li>\n        <span>&hellip;</span>\n      </li>\n      ').insertAfter(this.$p1);
+
+    this.$hellip2 = $('\n      <li>\n        <span>&hellip;</span>\n      </li>\n      ').insertBefore(this.$p2);
+  }
 
   this.render(this.options.page);
 };
@@ -126,49 +157,83 @@ Pagination.prototype.last = function () {
 Pagination.prototype.render = function (page) {
   var pages = this.options.pages;
 
-  this.$active.text(page);
-  this.$minus1.text(page - 1);
-  this.$minus2.text(page - 2);
-  this.$minus3.text(page - 3);
-  this.$minus4.text(page - 4);
-  this.$minus5.text(page - 5);
-  this.$plus1.text(page + 1);
-  this.$plus2.text(page + 2);
-  this.$plus3.text(page + 3);
-  this.$plus4.text(page + 4);
-  this.$plus5.text(page + 5);
+  this.$active.find('a').text(page);
+  this.$minus1.find('a').data('page', page - 1).text(page - 1);
+  this.$minus2.find('a').data('page', page - 2).text(page - 2);
+
+  this.$plus1.find('a').data('page', page + 1).text(page + 1);
+  this.$plus2.find('a').data('page', page + 2).text(page + 2);
 
   page > 2 ? this.$minus1.show() : this.$minus1.hide();
   page > 3 ? this.$minus2.show() : this.$minus2.hide();
   page < pages - 1 ? this.$plus1.show() : this.$plus1.hide();
   page < pages - 2 ? this.$plus2.show() : this.$plus2.hide();
 
-  page > pages - 3 && pages > 4 && page > 4 ? this.$minus3.show() : this.$minus3.hide();
-  page > pages - 2 && pages > 5 && page > 5 ? this.$minus4.show() : this.$minus4.hide();
-  page > pages - 1 && pages > 6 ? this.$minus5.show() : this.$minus5.hide();
+  if (pages > 4) {
+    this.$minus3.find('a').data('page', page - 3).text(page - 3);
+    this.$plus3.find('a').data('page', page + 3).text(page + 3);
+    page > pages - 3 && page > 4 ? this.$minus3.show() : this.$minus3.hide();
+    page < 4 && page < pages - 3 ? this.$plus3.show() : this.$plus3.hide();
+  }
 
-  page < 4 && pages > 4 && page < pages - 3 ? this.$plus3.show() : this.$plus3.hide();
-  page < 3 && pages > 5 && page < pages - 4 ? this.$plus4.show() : this.$plus4.hide();
-  page < 2 && pages > 6 ? this.$plus5.show() : this.$plus5.hide();
+  if (pages > 5) {
+    this.$minus4.find('a').data('page', page - 4).text(page - 4);
+    this.$plus4.find('a').data('page', page + 4).text(page + 4);
+    page > pages - 2 && page > 5 ? this.$minus4.show() : this.$minus4.hide();
+    page < 3 && page < pages - 4 ? this.$plus4.show() : this.$plus4.hide();
+  }
+
+  if (pages > 6) {
+    this.$minus5.find('a').data('page', page - 5).text(page - 5);
+    this.$plus5.find('a').data('page', page + 5).text(page + 5);
+    page > pages - 1 ? this.$minus5.show() : this.$minus5.hide();
+    page < 2 ? this.$plus5.show() : this.$plus5.hide();
+  }
+
+  // hellip
+  if (pages > 7) {
+    page > 4 ? this.$hellip1.show() : this.$hellip1.hide();
+    page < pages - 3 ? this.$hellip2.show() : this.$hellip2.hide();
+  }
 
   page > 1 ? this.$p1.show() : this.$p1.hide();
   page < pages ? this.$p2.show() : this.$p2.hide();
 
-  page > 4 && pages > 7 ? this.$hellip1.show() : this.$hellip1.hide();
-  page < pages - 3 && pages > 7 ? this.$hellip2.show() : this.$hellip2.hide();
-
   // prev/next
-  this.$first[page == 1 ? 'addClass' : 'removeClass']('disabled');
-  this.$prev[page == 1 ? 'addClass' : 'removeClass']('disabled');
-  this.$next[page == pages ? 'addClass' : 'removeClass']('disabled');
-  this.$last[page == pages ? 'addClass' : 'removeClass']('disabled');
+  if (this.options.firstLastBtn) {
+    if (page == 1) {
+      this.$first.addClass('disabled');
+    } else {
+      this.$first.removeClass('disabled');
+    }
+
+    if (page == pages) {
+      this.$last.addClass('disabled');
+    } else {
+      this.$last.removeClass('disabled');
+    }
+  }
+
+  if (this.options.prevNextBtn) {
+    if (page == 1) {
+      this.$prev.addClass('disabled');
+    } else {
+      this.$prev.removeClass('disabled');
+    }
+
+    if (page == pages) {
+      this.$next.addClass('disabled');
+    } else {
+      this.$next.removeClass('disabled');
+    }
+  }
 };
 
 function Plugin(option) {
   return this.each(function () {
     var $this = $(this);
     var data = $this.data('byPagination');
-    var options = $.extend({}, $this.data(), (typeof option === 'undefined' ? 'undefined' : _typeof(option)) === 'object' && option);
+    var options = $.extend({}, $this.data(), (typeof option === 'undefined' ? 'undefined' : _typeof(option)) == 'object' && option);
 
     if (!data) $this.data('byPagination', data = new Pagination(this, options));
     if (typeof option == 'string' && typeof data[option] == 'function') data[option]();
