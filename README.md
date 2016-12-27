@@ -1,67 +1,27 @@
 # By Pagination
 
-A jQuery pagination plugin.
+简单 jQuery 分页插件。
 
-## Usage
+## 使用
 
-1. Installation with npm, `npm install --save by-pagination`
+1. 通过 npm 安装：`npm install --save by-pagination`
 
-2. Include jQuery:
+2. 引入 jQuery：
 
   ``` html
   <script src="/js/libs/jquery-1.11.2.min.js"></script>
   ```
 
-3. Include plugin's code:
+3. 引入插件：
 
   ``` html
   <link rel="stylesheet" href="dist/css/by-pagination.css">
   <script src="dist/js/by-pagination.js"></script>
 
-  <ul class="by-pagination" id="page">
-    <li>
-      <a class="by-pagination-first" href="#">first</a>
-    </li>
-    <li>
-      <a class="by-pagination-prev" href="#">prev</a>
-    </li>
-    <li>
-      <a class="by-pagination-1" href="#">1</a>
-    </li>
-    <li class="by-pagination-hellip-1">
-      <span>&hellip;</span>
-    </li>
-    <li>
-      <a class="by-pagination-minus-2" href="#">1</a>
-    </li>
-    <li>
-      <a class="by-pagination-minus-1" href="#">1</a>
-    </li>
-    <li class="active">
-      <a class="by-pagination-active" href="#">1</a>
-    </li>
-    <li>
-      <a class="by-pagination-plus-1" href="#">1</a>
-    </li>
-    <li>
-      <a class="by-pagination-plus-2" href="#">1</a>
-    </li>
-    <li class="by-pagination-hellip-2">
-      <span>&hellip;</span>
-    </li>
-    <li>
-      <a class="by-pagination-2" href="#">1</a>
-    </li>
-    <li>
-      <a class="by-pagination-next" href="#">next</a>
-    </li>
-    <li>
-      <a class="by-pagination-last" href="#">last</a>
-    </li>
-  </ul>
+  <ul class="by-pagination" id="page"></ul>
   ```
 
-4. Call the plugin:
+4. 调用：
 
   ``` javascript
   $(function() {
@@ -76,7 +36,7 @@ A jQuery pagination plugin.
 
 * pages
 
-  Total page, default 1
+  总页数，默认值为 1
 
   ``` javascript
   $('#page').byPagination({
@@ -84,7 +44,7 @@ A jQuery pagination plugin.
   })
   ```
 
-  data attribute:
+  使用 `data-*` 属性传入参数：
 
   ``` html
   <ul data-pages="18"></ul>
@@ -92,13 +52,7 @@ A jQuery pagination plugin.
 
 * page
 
-  Current page, default 1
-
-  data attribute:
-
-  ``` html
-  <ul data-page="5"></ul>
-  ```
+  当前页，默认值为 1
 
 * firstLastBtn
 

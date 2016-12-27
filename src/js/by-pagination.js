@@ -80,6 +80,7 @@ Pagination.prototype.init = function() {
     this.$p2.find('a').data('page', pages).text(pages)
   }
 
+  // 生成当前页两边的页码按钮
   for (let i = 5; i >= 1; i--) {
     if (pages >= i) {
       this[`$minus${i}`] = $(pageTemplate).insertBefore(this.$active)
@@ -109,6 +110,7 @@ Pagination.prototype.init = function() {
 
 /*
  * @description to
+ * @param {Number} page 页码值
  */
 Pagination.prototype.to = function(page) {
   this.options.page = parseInt(page) || 1
@@ -118,7 +120,7 @@ Pagination.prototype.to = function(page) {
 }
 
 /*
- * @description first
+ * @description 跳转到第一页
  */
 Pagination.prototype.first = function() {
   if (this.options.page == 1) return
@@ -127,7 +129,7 @@ Pagination.prototype.first = function() {
 }
 
 /*
- * @description prev
+ * @description 上一页
  */
 Pagination.prototype.prev = function() {
   if (this.options.page <= 1) return
@@ -136,7 +138,7 @@ Pagination.prototype.prev = function() {
 }
 
 /*
- * @description next
+ * @description 下一页
  */
 Pagination.prototype.next = function() {
   if (this.options.page >= this.options.pages) return
@@ -145,7 +147,7 @@ Pagination.prototype.next = function() {
 }
 
 /*
- * @description last
+ * @description 跳转到最后一页
  */
 Pagination.prototype.last = function() {
   if (this.options.page == this.options.pages) return

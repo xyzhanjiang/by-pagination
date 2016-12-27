@@ -5,7 +5,7 @@
  * Copyright (c) 2016-2016 xyzhanjiang<xyzhanjiang@qq.com> & contributors
  * Licensed under the MIT license
  *
- * Date: 2016-12-27T03:19:12.592Z
+ * Date: 2016-12-27T05:52:27.307Z
  */
 
 ;(function(root, factory) {
@@ -55,15 +55,17 @@ Pagination.DEFAULTS = {
 };
 
 /*
- * @description init
+ * @description 初始化
  */
 Pagination.prototype.init = function () {
   var page = this.options.page;
   var pages = this.options.pages;
   var pageTemplate = this.options.pageTemplate;
 
+  // 生成当前页
   this.$active = $(pageTemplate).appendTo(this.$el).addClass('active');
 
+  // 生成首页和尾页按钮
   if (this.options.firstLastBtn) {
     this.$first = $(pageTemplate).insertBefore(this.$active);
     this.$first.find('a').on('click.by.pagination', $.proxy(this.first, this)).text(this.options.firstLastTxt[0]);
@@ -72,6 +74,7 @@ Pagination.prototype.init = function () {
     this.$last.find('a').on('click.by.pagination', $.proxy(this.last, this)).text(this.options.firstLastTxt[1]);
   }
 
+  // 生成上一页和下一页按钮
   if (this.options.prevNextBtn) {
     this.$prev = $(pageTemplate).insertBefore(this.$active);
     this.$prev.find('a').on('click.by.pagination', $.proxy(this.prev, this)).text(this.options.prevNextTxt[0]);
@@ -80,6 +83,7 @@ Pagination.prototype.init = function () {
     this.$next.find('a').on('click.by.pagination', $.proxy(this.next, this)).text(this.options.prevNextTxt[1]);
   }
 
+  // 生成第一页和最后一页按钮
   if (pages > 1) {
     this.$p1 = $(pageTemplate).insertBefore(this.$active);
     this.$p1.find('a').data('page', 1).text(1);
@@ -87,6 +91,7 @@ Pagination.prototype.init = function () {
     this.$p2.find('a').data('page', pages).text(pages);
   }
 
+  // 生成当前页两边的页码按钮
   for (var i = 5; i >= 1; i--) {
     if (pages >= i) {
       this['$minus' + i] = $(pageTemplate).insertBefore(this.$active);
@@ -96,6 +101,7 @@ Pagination.prototype.init = function () {
     }
   }
 
+  // 生成省略号
   if (pages > 7) {
     this.$hellip1 = $('\n      <li>\n        <span>&hellip;</span>\n      </li>\n      ').insertAfter(this.$p1);
 
@@ -107,6 +113,7 @@ Pagination.prototype.init = function () {
 
 /*
  * @description to
+ * @param {Number} page 页码值
  */
 Pagination.prototype.to = function (page) {
   this.options.page = parseInt(page) || 1;
@@ -116,7 +123,7 @@ Pagination.prototype.to = function (page) {
 };
 
 /*
- * @description first
+ * @description 跳转到第一页
  */
 Pagination.prototype.first = function () {
   if (this.options.page == 1) return;
@@ -125,7 +132,7 @@ Pagination.prototype.first = function () {
 };
 
 /*
- * @description prev
+ * @description 上一页
  */
 Pagination.prototype.prev = function () {
   if (this.options.page <= 1) return;
@@ -134,7 +141,7 @@ Pagination.prototype.prev = function () {
 };
 
 /*
- * @description next
+ * @description 下一页
  */
 Pagination.prototype.next = function () {
   if (this.options.page >= this.options.pages) return;
@@ -143,7 +150,7 @@ Pagination.prototype.next = function () {
 };
 
 /*
- * @description last
+ * @description 跳转到最后一页
  */
 Pagination.prototype.last = function () {
   if (this.options.page == this.options.pages) return;
