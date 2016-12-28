@@ -5,7 +5,7 @@
  * Copyright (c) 2016-2016 xyzhanjiang<xyzhanjiang@qq.com> & contributors
  * Licensed under the MIT license
  *
- * Date: 2016-12-27T12:12:30.653Z
+ * Date: 2016-12-28T11:56:26.032Z
  */
 
 ;(function(root, factory) {
@@ -19,7 +19,7 @@
 }(this, function($) {
 'use strict';
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 function Pagination(element, options) {
   this.$el = $(element);
@@ -57,7 +57,11 @@ Pagination.DEFAULTS = {
 /*
  * @description 初始化
  */
-Pagination.prototype.init = function () {
+Pagination.prototype.init = function (options) {
+  if (options) {
+    this.options.pages = options.pages;
+    this.$el.empty();
+  }
   var page = this.options.page;
   var pages = this.options.pages;
   var pageTemplate = this.options.pageTemplate;
@@ -249,6 +253,8 @@ function Plugin(option) {
     var options = $.extend({}, $this.data(), (typeof option === 'undefined' ? 'undefined' : _typeof(option)) == 'object' && option);
 
     if (!data) $this.data('byPagination', data = new Pagination(this, options));
+    // 重新初始化
+    else if ((typeof option === 'undefined' ? 'undefined' : _typeof(option)) == 'object') data.init(option);
     if (typeof option == 'string' && typeof data[option] == 'function') data[option]();
     if (typeof option == 'number') data.to(option);
   });

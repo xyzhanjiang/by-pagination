@@ -38,7 +38,11 @@ Pagination.DEFAULTS = {
 /*
  * @description 初始化
  */
-Pagination.prototype.init = function() {
+Pagination.prototype.init = function(options) {
+  if (options) {
+    this.options.pages = options.pages
+    this.$el.empty()
+  }
   var page = this.options.page
   var pages = this.options.pages
   var pageTemplate = this.options.pageTemplate
@@ -246,6 +250,8 @@ function Plugin(option) {
     var options = $.extend({}, $this.data(), typeof option == 'object' && option)
 
     if (!data) $this.data('byPagination', (data = new Pagination(this, options)))
+    // 重新初始化
+	  else if (typeof option == 'object') data.init(option)
     if (typeof option == 'string' && typeof data[option] == 'function') data[option]()
     if (typeof option == 'number') data.to(option)
   })
