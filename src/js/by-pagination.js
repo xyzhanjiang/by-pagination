@@ -254,12 +254,12 @@ function Plugin(option) {
     var $this   = $(this)
     var data    = $this.data('byPagination')
     var options = $.extend({}, $this.data(), typeof option == 'object' && option)
-
+	console.log(options);
     if (!data) $this.data('byPagination', (data = new Pagination(this, options)))
     // 重新初始化
 	  else if (typeof option == 'object' && data.options.pages != option.pages) data.init(option)
     if (typeof option == 'string' && typeof data[option] == 'function') data[option]()
-    if (typeof option == 'number') data.to(option)
+    if (typeof option == 'number' && option > 0 && option <= data.options.pages) data.to(option)
   })
 }
 

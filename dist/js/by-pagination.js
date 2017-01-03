@@ -5,7 +5,7 @@
  * Copyright (c) 2016-2017 xyzhanjiang<xyzhanjiang@qq.com> & contributors
  * Licensed under the MIT license
  *
- * Date: 2017-01-03T02:04:04.374Z
+ * Date: 2017-01-03T09:48:41.708Z
  */
 
 ;(function(root, factory) {
@@ -19,7 +19,7 @@
 }(this, function($) {
 'use strict';
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 function Pagination(element, options) {
   this.$el = $(element);
@@ -254,12 +254,12 @@ function Plugin(option) {
     var $this = $(this);
     var data = $this.data('byPagination');
     var options = $.extend({}, $this.data(), (typeof option === 'undefined' ? 'undefined' : _typeof(option)) == 'object' && option);
-
+    console.log(options);
     if (!data) $this.data('byPagination', data = new Pagination(this, options));
     // 重新初始化
     else if ((typeof option === 'undefined' ? 'undefined' : _typeof(option)) == 'object' && data.options.pages != option.pages) data.init(option);
     if (typeof option == 'string' && typeof data[option] == 'function') data[option]();
-    if (typeof option == 'number') data.to(option);
+    if (typeof option == 'number' && option > 0 && option <= data.options.pages) data.to(option);
   });
 }
 
