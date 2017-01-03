@@ -15,8 +15,13 @@ function Pagination(element, options) {
     // 如果点击当前页则返回
     if ($a.parent().hasClass('active')) return
 
+    if ($a.hasClass('by-pagination-first')) self.first()
+    else if ($a.hasClass('by-pagination-last')) self.last()
+    else if ($a.hasClass('by-pagination-prev')) self.prev()
+    else if ($a.hasClass('by-pagination-next')) self.next()
+
     // 跳转到点击页面
-    if ($a.data('page')) self.to($a.data('page'))
+    else if ($a.data('page')) self.to($a.data('page'))
   })
 }
 
@@ -54,12 +59,12 @@ Pagination.prototype.init = function(options) {
   if (this.options.firstLastBtn) {
     this.$first = $(pageTemplate).insertBefore(this.$active)
     this.$first.find('a')
-      .on('click.by.pagination', $.proxy(this.first, this))
+      .addClass('by-pagination-first')
       .text(this.options.firstLastTxt[0])
 
     this.$last = $(pageTemplate).insertAfter(this.$active)
     this.$last.find('a')
-      .on('click.by.pagination', $.proxy(this.last, this))
+      .addClass('by-pagination-last')
       .text(this.options.firstLastTxt[1])
   }
 
@@ -67,12 +72,12 @@ Pagination.prototype.init = function(options) {
   if (this.options.prevNextBtn) {
     this.$prev = $(pageTemplate).insertBefore(this.$active)
     this.$prev.find('a')
-      .on('click.by.pagination', $.proxy(this.prev, this))
+      .addClass('by-pagination-prev')
       .text(this.options.prevNextTxt[0])
 
     this.$next = $(pageTemplate).insertAfter(this.$active)
     this.$next.find('a')
-      .on('click.by.pagination', $.proxy(this.next, this))
+      .addClass('by-pagination-next')
       .text(this.options.prevNextTxt[1])
   }
 
@@ -213,7 +218,7 @@ Pagination.prototype.render = function(page) {
     page < pages - 3 ? this.$hellip2.show() : this.$hellip2.hide()
   }
 
-  // prev/next
+  // first last
   if (this.options.firstLastBtn) {
     if (page == 1) {
       this.$first.addClass('disabled')
@@ -228,6 +233,7 @@ Pagination.prototype.render = function(page) {
     }
   }
 
+  // prev next
   if (this.options.prevNextBtn) {
     if (page == 1) {
       this.$prev.addClass('disabled')
@@ -251,7 +257,7 @@ function Plugin(option) {
 
     if (!data) $this.data('byPagination', (data = new Pagination(this, options)))
     // 重新初始化
-	  else if (typeof option == 'object') data.init(option)
+	  else if (typeof option == 'object' && data.options.pages != option.pages) data.init(option)
     if (typeof option == 'string' && typeof data[option] == 'function') data[option]()
     if (typeof option == 'number') data.to(option)
   })

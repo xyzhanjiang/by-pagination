@@ -2,10 +2,10 @@
  * by-pagination v0.0.5
  * https://github.com/xyzhanjiang/by-pagination/
  *
- * Copyright (c) 2016-2016 xyzhanjiang<xyzhanjiang@qq.com> & contributors
+ * Copyright (c) 2016-2017 xyzhanjiang<xyzhanjiang@qq.com> & contributors
  * Licensed under the MIT license
  *
- * Date: 2016-12-28T11:56:26.032Z
+ * Date: 2017-01-03T02:04:04.374Z
  */
 
 ;(function(root, factory) {
@@ -19,7 +19,7 @@
 }(this, function($) {
 'use strict';
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
 function Pagination(element, options) {
   this.$el = $(element);
@@ -38,8 +38,10 @@ function Pagination(element, options) {
     // 如果点击当前页则返回
     if ($a.parent().hasClass('active')) return;
 
+    if ($a.hasClass('by-pagination-first')) self.first();else if ($a.hasClass('by-pagination-last')) self.last();else if ($a.hasClass('by-pagination-prev')) self.prev();else if ($a.hasClass('by-pagination-next')) self.next();
+
     // 跳转到点击页面
-    if ($a.data('page')) self.to($a.data('page'));
+    else if ($a.data('page')) self.to($a.data('page'));
   });
 }
 
@@ -72,19 +74,19 @@ Pagination.prototype.init = function (options) {
   // 生成首页和尾页按钮
   if (this.options.firstLastBtn) {
     this.$first = $(pageTemplate).insertBefore(this.$active);
-    this.$first.find('a').on('click.by.pagination', $.proxy(this.first, this)).text(this.options.firstLastTxt[0]);
+    this.$first.find('a').addClass('by-pagination-first').text(this.options.firstLastTxt[0]);
 
     this.$last = $(pageTemplate).insertAfter(this.$active);
-    this.$last.find('a').on('click.by.pagination', $.proxy(this.last, this)).text(this.options.firstLastTxt[1]);
+    this.$last.find('a').addClass('by-pagination-last').text(this.options.firstLastTxt[1]);
   }
 
   // 生成上一页和下一页按钮
   if (this.options.prevNextBtn) {
     this.$prev = $(pageTemplate).insertBefore(this.$active);
-    this.$prev.find('a').on('click.by.pagination', $.proxy(this.prev, this)).text(this.options.prevNextTxt[0]);
+    this.$prev.find('a').addClass('by-pagination-prev').text(this.options.prevNextTxt[0]);
 
     this.$next = $(pageTemplate).insertAfter(this.$active);
-    this.$next.find('a').on('click.by.pagination', $.proxy(this.next, this)).text(this.options.prevNextTxt[1]);
+    this.$next.find('a').addClass('by-pagination-next').text(this.options.prevNextTxt[1]);
   }
 
   // 生成第一页和最后一页按钮
@@ -216,7 +218,7 @@ Pagination.prototype.render = function (page) {
     page < pages - 3 ? this.$hellip2.show() : this.$hellip2.hide();
   }
 
-  // prev/next
+  // first last
   if (this.options.firstLastBtn) {
     if (page == 1) {
       this.$first.addClass('disabled');
@@ -231,6 +233,7 @@ Pagination.prototype.render = function (page) {
     }
   }
 
+  // prev next
   if (this.options.prevNextBtn) {
     if (page == 1) {
       this.$prev.addClass('disabled');
@@ -254,7 +257,7 @@ function Plugin(option) {
 
     if (!data) $this.data('byPagination', data = new Pagination(this, options));
     // 重新初始化
-    else if ((typeof option === 'undefined' ? 'undefined' : _typeof(option)) == 'object') data.init(option);
+    else if ((typeof option === 'undefined' ? 'undefined' : _typeof(option)) == 'object' && data.options.pages != option.pages) data.init(option);
     if (typeof option == 'string' && typeof data[option] == 'function') data[option]();
     if (typeof option == 'number') data.to(option);
   });
