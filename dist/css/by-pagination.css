@@ -5,15 +5,18 @@
  * Copyright (c) 2016-2017 xyzhanjiang<xyzhanjiang@qq.com> & contributors
  * Licensed under the MIT license
  *
- * Date: 2017-01-03T02:04:04.374Z
+ * Date: 2017-03-24T11:59:16.241Z
  */
+
 
 .by-pagination {
   display: inline-block;
-  padding-left: 0; }
+  padding-left: 0;
+}
 
 .by-pagination li {
-  display: inline; }
+  display: inline;
+}
 
 .by-pagination li a {
   color: #999;
@@ -22,29 +25,35 @@
   margin: 0 6px;
   padding: 2px 4px;
   position: relative;
-  text-decoration: none; }
+  text-decoration: none;
+}
 
 .by-pagination li a:hover,
 .by-pagination li a:focus {
   border-color: #ccc;
   color: #ee7326;
-  outline: none; }
+  outline: none;
+}
 
 .by-pagination li span {
   float: left;
   margin: 0 2px;
-  position: relative; }
+  position: relative;
+}
 
-.by-pagination li.active a {
+.by-pagination li.by-pagination-active a {
   border-color: #999;
-  color: #ee7326; }
+  color: #ee7326;
+}
 
-.by-pagination li.disabled a {
+.by-pagination li.by-pagination-disabled a {
   background-color: #f3f3f3;
   border-color: #ccc;
   color: #ccc;
-  cursor: not-allowed; }
+  cursor: not-allowed;
+}
 
 .by-pagination .prev-next a {
   border: 1px solid #dedede;
-  padding: 2px 6px; }
+  padding: 2px 6px;
+}

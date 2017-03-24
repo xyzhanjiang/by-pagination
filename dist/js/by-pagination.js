@@ -5,7 +5,7 @@
  * Copyright (c) 2016-2017 xyzhanjiang<xyzhanjiang@qq.com> & contributors
  * Licensed under the MIT license
  *
- * Date: 2017-01-03T09:48:41.708Z
+ * Date: 2017-03-24T11:59:16.241Z
  */
 
 ;(function(root, factory) {
@@ -19,7 +19,7 @@
 }(this, function($) {
 'use strict';
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
 function Pagination(element, options) {
   this.$el = $(element);
@@ -59,17 +59,22 @@ Pagination.DEFAULTS = {
 /*
  * @description 初始化
  */
-Pagination.prototype.init = function (options) {
-  if (options) {
-    this.options.pages = options.pages;
-    this.$el.empty();
-  }
+Pagination.prototype.init = function () {
+
   var page = this.options.page;
   var pages = this.options.pages;
   var pageTemplate = this.options.pageTemplate;
 
+  if (typeof page != 'number' || typeof pages != 'number') {
+    throw new Error('Invalid page or pages number!');
+  }
+
+  if (page < 1 || pages < 1 || page > pages) {
+    throw new Error('Invalid page or pages number!');
+  }
+
   // 生成当前页
-  this.$active = $(pageTemplate).appendTo(this.$el).addClass('active');
+  this.$active = $(pageTemplate).appendTo(this.$el).addClass('by-pagination-active');
 
   // 生成首页和尾页按钮
   if (this.options.firstLastBtn) {
@@ -114,7 +119,32 @@ Pagination.prototype.init = function (options) {
     this.$hellip2 = $('\n      <li>\n        <span>&hellip;</span>\n      </li>\n      ').insertBefore(this.$p2);
   }
 
-  this.render(this.options.page);
+  this.render(page);
+};
+
+/*
+ * @description refresh
+ * @param {Number} page 页码值
+ */
+Pagination.prototype.refresh = function (options) {
+  var page, pages;
+
+  if (!options) return;
+  page = options.page;
+  pages = options.pages;
+
+  if (typeof page != 'number' || typeof pages != 'number') {
+    throw new Error('Invalid page or pages number!');
+  }
+
+  if (page < 1 || pages < 1 || page > pages) {
+    throw new Error('Invalid page or pages number!');
+  }
+  this.options.page = page;
+  this.options.pages = pages;
+  this.$el.empty();
+
+  this.init();
 };
 
 /*
@@ -122,10 +152,18 @@ Pagination.prototype.init = function (options) {
  * @param {Number} page 页码值
  */
 Pagination.prototype.to = function (page) {
-  this.options.page = parseInt(page) || 1;
-  this.$el.trigger('page.by.pagination', this.options.page);
+  if (typeof page != 'number') {
+    throw new Error('Invalid page number');
+  }
+
+  if (page < 1 || page > this.options.pages) {
+    throw new Error('Invalid page number');
+  }
+
+  this.options.page = page;
+  this.$el.trigger('page.by.pagination', page);
   this.$active.find('a').focus();
-  this.render(this.options.page);
+  this.render(page);
 };
 
 /*
@@ -221,30 +259,30 @@ Pagination.prototype.render = function (page) {
   // first last
   if (this.options.firstLastBtn) {
     if (page == 1) {
-      this.$first.addClass('disabled');
+      this.$first.addClass('by-pagination-disabled');
     } else {
-      this.$first.removeClass('disabled');
+      this.$first.removeClass('by-pagination-disabled');
     }
 
     if (page == pages) {
-      this.$last.addClass('disabled');
+      this.$last.addClass('by-pagination-disabled');
     } else {
-      this.$last.removeClass('disabled');
+      this.$last.removeClass('by-pagination-disabled');
     }
   }
 
   // prev next
   if (this.options.prevNextBtn) {
     if (page == 1) {
-      this.$prev.addClass('disabled');
+      this.$prev.addClass('by-pagination-disabled');
     } else {
-      this.$prev.removeClass('disabled');
+      this.$prev.removeClass('by-pagination-disabled');
     }
 
     if (page == pages) {
-      this.$next.addClass('disabled');
+      this.$next.addClass('by-pagination-disabled');
     } else {
-      this.$next.removeClass('disabled');
+      this.$next.removeClass('by-pagination-disabled');
     }
   }
 };
@@ -254,12 +292,18 @@ function Plugin(option) {
     var $this = $(this);
     var data = $this.data('byPagination');
     var options = $.extend({}, $this.data(), (typeof option === 'undefined' ? 'undefined' : _typeof(option)) == 'object' && option);
-    console.log(options);
+
     if (!data) $this.data('byPagination', data = new Pagination(this, options));
     // 重新初始化
-    else if ((typeof option === 'undefined' ? 'undefined' : _typeof(option)) == 'object' && data.options.pages != option.pages) data.init(option);
+    else if ((typeof option === 'undefined' ? 'undefined' : _typeof(option)) == 'object') {
+        if (data.options.pages != option.pages) {
+          data.refresh(option);
+        } else {
+          if (data.options.page != option.page) data.to(option.page);
+        }
+      }
     if (typeof option == 'string' && typeof data[option] == 'function') data[option]();
-    if (typeof option == 'number' && option > 0 && option <= data.options.pages) data.to(option);
+    if (typeof option == 'number') data.to(option);
   });
 }
 

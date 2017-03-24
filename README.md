@@ -12,16 +12,24 @@
   <script src="/js/libs/jquery-1.11.2.min.js"></script>
   ```
 
-3. 引入插件：
+3. 引入插件
 
   ``` html
-  <link rel="stylesheet" href="dist/css/by-pagination.css">
-  <script src="dist/js/by-pagination.js"></script>
+  <link rel="stylesheet" href="./node_modules/by-pagination/dist/css/by-pagination.css">
+  <script src="./node_modules/by-pagination/dist/js/by-pagination.js"></script>
 
   <ul class="by-pagination" id="page"></ul>
   ```
 
-4. 调用：
+4. 调用
+
+  手动调用：
+
+  ``` html
+  <ul class="by-pagination" id="page"></ul>
+  ```
+  
+  js：
 
   ``` javascript
   $(function() {
@@ -30,6 +38,12 @@
       page: 1
     })
   })
+  ```
+
+  或者页面初始时自动调用：
+
+  ``` html
+  <ul class="by-pagination" data-init="by-pagination" data-page="1" data-pages="10"></ul>
   ```
 
 ### Options

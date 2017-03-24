@@ -1,4 +1,7 @@
-$by-pagination-color: #23527c;
+
+:root {
+  --by-pagination-color: #ee7326;
+}
 
 .by-pagination {
   display: inline-block;
@@ -22,7 +25,7 @@ $by-pagination-color: #23527c;
 .by-pagination li a:hover,
 .by-pagination li a:focus {
   border-color: #ccc;
-  color: #ee7326;
+  color: var(--by-pagination-color);
   outline: none;
 }
 
@@ -32,12 +35,12 @@ $by-pagination-color: #23527c;
   position: relative;
 }
 
-.by-pagination li.active a {
+.by-pagination li.by-pagination-active a {
   border-color: #999;
-  color: #ee7326;
+  color: var(--by-pagination-color);
 }
 
-.by-pagination li.disabled a {
+.by-pagination li.by-pagination-disabled a {
   background-color: #f3f3f3;
   border-color: #ccc;
   color: #ccc;
